@@ -15,7 +15,7 @@ def get_list_price(isbn):
     Returns
     -------
     list_price : float
-        List price of the book in US dollars.
+        List price of the book in US dollars, or None if not found.
 
     Examples
     --------
