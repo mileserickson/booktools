@@ -3,6 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 def get_list_price(isbn):
     """Return the list price of a book.
 
@@ -21,4 +22,12 @@ def get_list_price(isbn):
     >>> get_list_price("9780262029445")
     74.0
     """
-    pass
+    AMAZON_URL = "http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="
+    search_result = requests.get(AMAZON_URL+isbn)
+    book_soup = BeautifulSoup(search_result.content, 'lxml')
+
+    price = book_soup.select_one("span.a-text-strike").get_text()
+    if price[0] == '$':
+        return float(price[1:])
+    else:
+        return None
